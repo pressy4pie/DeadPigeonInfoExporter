@@ -114,6 +114,10 @@ public class MainActivity extends AppCompatActivity {
         //send.
         startActivity(Intent.createChooser(sharingIntent, "Share via"));
 
+        //reset.
+        send.setText("SENT. GO AGAIN?");
+
+
     }
 
 }
