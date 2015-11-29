@@ -35,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
     public String imei;
     public String serialnumber;
     public String deviceid;
+    public String devicename;
+    public String model;
+    public String buildid;
+    public String builddate;
 
     //stole this from myself from a different app. Lot's of fun here.
     public static String readProp(String prop) {
@@ -81,6 +85,12 @@ public class MainActivity extends AppCompatActivity {
         //easy getprop for serial number
         serialnumber = readProp("ro.boot.serialno");
 
+        //easy getprop for Model number
+        devicename = readProp("ro.product.device");
+        model = readProp("ro.product.model");
+        builddate = readProp("ro.build.date.utc");
+        buildid = readProp("ro.build.id");
+
         //device id. No very sure what this number is but it's here.
         deviceid = Secure.getString(this.getContentResolver(), Secure.ANDROID_ID);
 
@@ -90,6 +100,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d("pigeon", "imei : " + imei);
         Log.d("pigeon", "Serial Number : " + serialnumber);
         Log.d("pigeon", "android_id : " + deviceid);
+        Log.d("pigeon", "devicename : " + devicename);
+        Log.d("pigeon", "model : " + model);
+        Log.d("pigeon", "model : " + builddate);
+        Log.d("pigeon", "model : " + buildid);
 
     }
 
@@ -104,11 +118,15 @@ public class MainActivity extends AppCompatActivity {
         //build the stuff to be shared.
         String shareBody =
                 "IMEI : " + imei +"\n" +
+                "BUILD DATE : " + builddate + "\n" +
+                "BUILDID : " + buildid + "\n" +
                 "SERIAL NUMBER : " + serialnumber + "\n" +
+                "MODEL NUMBER : " + model + "\n" +
+                "DEVICE NAME : " + devicename + "\n" +
                 "ANDORID_ID : " + deviceid;
 
         //package and putExtra it
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "DEAD PIGEONS");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, imei + " - " + devicename + " - DEAD PIGEONS DEVICE INFO");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
 
         //send.
